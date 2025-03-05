@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .container {
+      max-width: 600px;
+      margin-top: 50px;
+    }
+    .form-container {
+      padding: 30px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background-color: #f9f9f9;
+    }
+    .result-message {
+      padding: 20px;
+      background-color: #d4edda;
+      border-radius: 5px;
+      color: #155724;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="form-container">
+    <h2 class="text-center">Registration Form</h2>
+    <form id="registrationForm" onsubmit="return validateForm(event)">
+      <!-- First Name -->
+      <div class="mb-3">
+        <label for="firstName" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="firstName" name="firstName" required placeholder="Enter first name">
+        <div id="firstNameError" class="text-danger" style="display:none;">Please enter a valid first name.</div>
+      </div>
+
+      <!-- Middle Name -->
+      <div class="mb-3">
+        <label for="middleName" class="form-label">Middle Name (optional)</label>
+        <input type="text" class="form-control" id="middleName" name="middleName" placeholder="Enter middle name">
+      </div>
+
+      <!-- Last Name -->
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="lastName" name="lastName" required placeholder="Enter last name">
+        <div id="lastNameError" class="text-danger" style="display:none;">Please enter a valid last name.</div>
+      </div>
+
+      <!-- Aadhar Number -->
+      <div class="mb-3">
+        <label for="aadhar" class="form-label">Aadhar Number</label>
+        <input type="text" class="form-control" id="aadhar" name="aadhar" required placeholder="Enter Aadhar number (12 digits)">
+        <div id="aadharError" class="text-danger" style="display:none;">Aadhar number must be 12 digits.</div>
+      </div>
+
+      <!-- PAN Card Number -->
+      <div class="mb-3">
+        <label for="pan" class="form-label">PAN Card Number</label>
+        <input type="text" class="form-control" id="pan" name="pan" required placeholder="Enter PAN card number">
+        <div id="panError" class="text-danger" style="display:none;">Invalid PAN card number.</div>
+      </div>
+
+      <!-- Mobile Number -->
+      <div class="mb-3">
+        <label for="mobile" class="form-label">Mobile Number</label>
+        <input type="tel" class="form-control" id="mobile" name="mobile" required placeholder="Enter mobile number">
+        <div id="mobileError" class="text-danger" style="display:none;">Please enter a valid 10-digit mobile number.</div>
+      </div>
+
+      <!-- Date of Birth -->
+      <div class="mb-3">
+        <label for="dob" class="form-label">Date of Birth</label>
+        <input type="date" class="form-control" id="dob" name="dob" required>
+        <div id="dobError" class="text-danger" style="display:none;">You must be at least 18 years old.</div>
+      </div>
+
+      <!-- Marks -->
+      <div class="mb-3">
+        <label for="marks" class="form-label">Enter marks for 6 subjects (out of 100)</label>
+        <div class="row">
+          <div class="col-md-2">
+            <input type="number" class="form-control" id="subject1" name="subject1" required placeholder="Subject 1">
+          </div>
+          <div class="col-md-2">
+            <input type="number" class="form-control" id="subject2" name="subject2" required placeholder="Subject 2">
+          </div>
+          <div class="col-md-2">
+            <input type="number" class="form-control" id="subject3" name="subject3" required placeholder="Subject 3">
+          </div>
+          <div class="col-md-2">
+            <input type="number" class="form-control" id="subject4" name="subject4" required placeholder="Subject 4">
+          </div>
+          <div class="col-md-2">
+            <input type="number" class="form-control" id="subject5" name="subject5" required placeholder="Subject 5">
+          </div>
+          <div class="col-md-2">
+            <input type="number" class="form-control" id="subject6" name="subject6" required placeholder="Subject 6">
+          </div>
+        </div>
+        <div id="marksError" class="text-danger" style="display:none;">Each mark should be between 0 and 100.</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+    <!-- Result Message Section -->
+    <div id="resultMessage" class="result-message">
+      <strong>Registration Successful!</strong><br>
+      <strong>Percentage (Best of 5):</strong> <span id="resultPercentageMsg"></span>%
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Form validation logic
+function validateForm(event) {
+  event.preventDefault(); 
+  
+  let valid = true;
+
+  // First Name and Last Name validation
+  let firstName = document.getElementById("firstName").value.trim();
+  let lastName = document.getElementById("lastName").value.trim();
+  let namePattern = /^[A-Za-z\s]+$/;
+  if (!firstName || !namePattern.test(firstName)) {
+    document.getElementById("firstNameError").style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("firstNameError").style.display = "none";
+  }
+  if (!lastName || !namePattern.test(lastName)) {
+    document.getElementById("lastNameError").style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("lastNameError").style.display = "none";
+  }
+
+  // Aadhar number validation
+  let aadhar = document.getElementById("aadhar").value.trim();
+  if (!/^\d{12}$/.test(aadhar)) {
+    document.getElementById("aadharError").style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("aadharError").style.display = "none";
+  }
+
+  // PAN card number validation
+  let pan = document.getElementById("pan").value.trim();
+  let panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+  if (!panPattern.test(pan)) {
+    document.getElementById("panError").style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("panError").style.display = "none";
+  }
+
+  // Mobile number validation
+  let mobile = document.getElementById("mobile").value.trim();
+  if (!/^\d{10}$/.test(mobile)) {
+    document.getElementById("mobileError").style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("mobileError").style.display = "none";
+  }
+
+  // Date of Birth validation
+  let dob = new Date(document.getElementById("dob").value);
+  let age = new Date().getFullYear() - dob.getFullYear();
+  if (age < 18) {
+    document.getElementById("dobError").style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("dobError").style.display = "none";
+  }
+
+  // Marks validation
+  let marks = [
+    parseInt(document.getElementById("subject1").value),
+    parseInt(document.getElementById("subject2").value),
+    parseInt(document.getElementById("subject3").value),
+    parseInt(document.getElementById("subject4").value),
+    parseInt(document.getElementById("subject5").value),
+    parseInt(document.getElementById("subject6").value),
+  ];
+  let validMarks = marks.every(mark => mark >= 0 && mark <= 100);
+  if (!validMarks) {
+    document.getElementById("marksError").style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("marksError").style.display = "none";
+  }
+
+  if (valid) {
+    // Calculate percentage for best of 5 subjects
+    marks.sort((a, b) => b - a); // Sort marks in descending order
+    let bestFiveMarks = marks.slice(0, 5); // Get best 5 marks
+    let percentage = (bestFiveMarks.reduce((a, b) => a + b) / 500) * 100;
+
+    // Show the result message with percentage
+    document.getElementById("resultPercentageMsg").textContent = percentage.toFixed(2);
+
+    // Display the result message section
+    document.getElementById("resultMessage").style.display = "block";
+  }
+
+  return false; // Prevent form submission to allow the result to display
+}
+</script>
+</body>
+</html>
